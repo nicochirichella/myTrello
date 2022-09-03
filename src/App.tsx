@@ -41,8 +41,24 @@ function App() {
     updateDataWithList(list, listId);
   }
 
+  const addList = (title: string) => {
+    const newList = {
+      id: `list-${data.listsIds.length + 1}`,
+      title,
+      cards: [],
+    }
+    setData({
+      ...data,
+      listsIds: [...data.listsIds, newList.id],
+      lists: {
+        ...data.lists,
+        [newList.id]: newList,
+      }
+    });
+  }
+
   return (
-    <ContextApi.Provider value={{ updateListTitle, addCard }}>
+    <ContextApi.Provider value={{ updateListTitle, addCard, addList }}>
       <div className={classes.root}>
         <div className={classes.container}>
           {

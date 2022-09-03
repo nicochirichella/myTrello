@@ -20,7 +20,7 @@ const AddCardOrListText = ({type, listId, setOpen} :
        const id = listId? listId : '';
        if (addCard) addCard(title, 'description', id);
     } else {
-        console.log('add list');
+        if (addList) addList(title);
     }
 
     setTitle('');
