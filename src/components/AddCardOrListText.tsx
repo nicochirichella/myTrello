@@ -13,18 +13,17 @@ const AddCardOrListText = ({type, listId, setOpen} :
   const { addCard, addList } = useContext(Context);
 
   const handleAddCardOnList = () => {
-    console.log('add card on list');
-    if (type === 'card') {
-       console.log('add card on list');
-       console.log(listId);
-       const id = listId? listId : '';
-       if (addCard) addCard(title, 'description', id);
-    } else {
-        if (addList) addList(title);
+    if (title && addCard && addList) {
+        if (type === 'card') {
+            const id = listId? listId : '';
+            addCard(title, 'description', id);
+         } else {
+            addList(title);
+         }
+     
+         setTitle('');
+         setOpen(false);
     }
-
-    setTitle('');
-    setOpen(false);
   }
 
   return (
