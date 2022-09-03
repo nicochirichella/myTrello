@@ -9,6 +9,7 @@ export const mockData: {
     lists: {
         "list-1": {
             title: "To Do",
+            id: "list-1",
             cards: {
                 "card-1": {
                     title: "Learn React",
@@ -22,6 +23,7 @@ export const mockData: {
             cardsIds: ["card-1", "card-2"]
         },
         "list-2": {
+            id: "list-2",
             title: "In Progress",
             cards: {
                 "card-3": {

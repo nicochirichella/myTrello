@@ -1,4 +1,4 @@
-import { Paper, Typography, InputBase, makeStyles, Button, IconButton, alpha } from '@material-ui/core';
+import { Paper, InputBase, makeStyles, Button, IconButton, alpha } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
@@ -17,7 +17,7 @@ const AddCardOrListText = ({type, setOpen} :
             multiline
                 value={ title } onChange={e => setTitle(e.target.value)}
                 onBlur={() => setOpen()}
-            placeholder={ type == 'card' ? 'Enter a title for this card...' : 'Enter list title...'} 
+            placeholder={ type === 'card' ? 'Enter a title for this card...' : 'Enter list title...'} 
             inputProps={{className: classes.input}}
         />
     </Paper>

@@ -4,6 +4,7 @@ export interface Card {
 }
 
 export interface List {
+    id: string,
     title: string;
     cards: {
         [key: string]: Card;

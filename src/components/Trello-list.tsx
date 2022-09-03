@@ -18,7 +18,7 @@ const TrelloList = ({list} : {list: List}) => {
         // paper use style useStyle
         <Paper className={useStyle().root}>
             <CssBaseline />
-            <ListTitle title={list.title}/>
+            <ListTitle title={list.title} listId={list.id }/>
             {
                 list.cardsIds.map((cardId) => {
                     const card = list.cards[cardId];

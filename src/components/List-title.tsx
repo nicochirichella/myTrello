@@ -1,16 +1,47 @@
-import { Typography, makeStyles} from '@material-ui/core';
+import { Typography, makeStyles, InputBase } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import { useState, useContext } from 'react';
+import Context from '../ContextApi';
 
-const ListTitle = ({title='To do'}) => {
+const ListTitle = ({title='', listId} : {
+    title: string, 
+    listId: string }) => {
     const classes = useStyle();
-    return (
-        <div className={classes.title}>
-            <Typography className={classes.titleText}>
-                {title}
-            </Typography >
-            <MoreHorizIcon />
-        </div>
-    );
+    const [open, setOpen] = useState(true);
+    const [newTitle, setNewTitle] = useState(title);
+    const { updateListTitle } = useContext(Context);
+
+    const handleBlur = () => {
+        setOpen(false);
+        if (updateListTitle) {
+            updateListTitle(newTitle, listId);
+        }
+    }
+
+    return ( 
+        <>
+        {
+            open ? (
+                <InputBase
+                    value={newTitle}
+                    onChange={e => setNewTitle(e.target.value)}
+                    onBlur={handleBlur}
+                    autoFocus
+                    fullWidth
+                    inputProps={{className: classes.input }}
+                />
+            ) : (
+                <div className={classes.title}>
+                    <Typography className={classes.titleText} 
+                    onClick={() => setOpen(true)}>
+                        {title}
+                    </Typography >
+                    <MoreHorizIcon />
+                </div>
+            )
+        }
+        </>
+    )
 }
 
 const useStyle = makeStyles((theme: any) => ({
@@ -23,6 +54,15 @@ const useStyle = makeStyles((theme: any) => ({
         flexGrow: 1,
         fontSize: '1.2rem',
         fontWeight: 'bold',
+    },
+
+    input: {
+        fontSize: '1.2rem',
+        fontWeight: 'bold',
+        margin: theme.spacing(1),
+        "&:focus": {
+            background: '#ddd',
+        }
     }
 }));
 

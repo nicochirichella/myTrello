@@ -5,23 +5,39 @@ import TrelloList from './components/Trello-list';
 import AddCardOrList from './components/AddCardOrList';
 import background_image from '../src/images/mundial.jpeg';
 import { mockData } from './mocks/mockData';
+import ContextApi from './ContextApi';
+import { useState } from 'react';
 
 function App() {
   const classes = useStyle();
+  const [data, setData] = useState(mockData);
+
+  const updateListTitle = (title: string, listId: string) => {
+    console.log(title, listId);
+    const list = data.lists[listId];
+    list.title = title;
+    setData({...data,
+      lists: {
+        ...data.lists,
+        [listId]: list,
+      }
+    });
+  }
 
   return (
-    <div className={classes.root}>
-      <div className={classes.container}>
-        {
-          mockData.listsIds.map((listId: any) => {
-            const list = mockData.lists[listId];
-            return <TrelloList key={listId} list={list} />
-          })
-        }
-        <AddCardOrList type="list"/>
+    <ContextApi.Provider value={{ updateListTitle }}>
+      <div className={classes.root}>
+        <div className={classes.container}>
+          {
+            data.listsIds.map((listId: any) => {
+              const list = data.lists[listId];
+              return <TrelloList key={listId} list={list}/>
+            })
+          }
+          <AddCardOrList type="list"/>
+        </div>
       </div>
-      
-    </div>
+    </ContextApi.Provider>
   );
 }
 
