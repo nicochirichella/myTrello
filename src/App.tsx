@@ -7,16 +7,15 @@ import background_image from '../src/images/mundial.jpeg';
 import { mockData } from './mocks/mockData';
 import ContextApi from './ContextApi';
 import { useState } from 'react';
+import { List } from './types/types';
 
 function App() {
   const classes = useStyle();
   const [data, setData] = useState(mockData);
 
-  const updateListTitle = (title: string, listId: string) => {
-    console.log(title, listId);
-    const list = data.lists[listId];
-    list.title = title;
-    setData({...data,
+  const updateDataWithList = (list: List, listId: string) => {
+    setData({
+      ...data,
       lists: {
         ...data.lists,
         [listId]: list,
@@ -24,8 +23,26 @@ function App() {
     });
   }
 
+
+  const updateListTitle = (title: string, listId: string) => {
+    console.log(title, listId);
+    const list = data.lists[listId];
+    list.title = title;
+    updateDataWithList(list, listId);
+  }
+
+  const addCard = (title: string, description: string, listId: string) => {
+    const newCard = {
+      description,
+      title,
+    }
+    const list = data.lists[listId];
+    list.cards.push(newCard);
+    updateDataWithList(list, listId);
+  }
+
   return (
-    <ContextApi.Provider value={{ updateListTitle }}>
+    <ContextApi.Provider value={{ updateListTitle, addCard }}>
       <div className={classes.root}>
         <div className={classes.container}>
           {

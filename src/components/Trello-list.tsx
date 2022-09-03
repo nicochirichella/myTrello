@@ -20,14 +20,9 @@ const TrelloList = ({list} : {list: List}) => {
             <CssBaseline />
             <ListTitle title={list.title} listId={list.id }/>
             {
-                list.cardsIds.map((cardId) => {
-                    const card = list.cards[cardId];
-                    return (
-                        <TrelloCard key={cardId} card={card}/>
-                    );
-                })
+                list.cards.map((card, id) => ( <TrelloCard key={id} card={card}/>))
             }
-            <AddCardOrList type="card"/>
+            <AddCardOrList type="card" listId={list.id}/>
         </Paper>
 
         

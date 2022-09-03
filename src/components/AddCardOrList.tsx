@@ -2,14 +2,15 @@ import { Collapse, alpha, makeStyles, Paper, Typography } from '@material-ui/cor
 import { useState } from 'react';
 import AddCardOrListText from './AddCardOrListText';
 
-function AddCardOrList({type}: {type: string}) {
+function AddCardOrList({type, listId}: {type: string, listId?: string}) {
 
   const classes = useStyle();
   const [open, setOpen] = useState(true);
+  console.log('listId', listId);
   return (
     <div className={classes.root}>
         <Collapse in={open}>
-            <AddCardOrListText type ={type} setOpen={() => setOpen(!open)}/>
+            <AddCardOrListText type ={type} listId={listId} setOpen={(value: boolean) => setOpen(value)}/>
         </Collapse>
         <Collapse in={!open}>
             <Paper className={classes.addCardOrList} onClick={() => setOpen(true)}>

@@ -1,14 +1,31 @@
 import { Paper, InputBase, makeStyles, Button, IconButton, alpha } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import Context from '../ContextApi';
+import { useState, useContext } from 'react';
 
-import { useState } from 'react';
-
-const AddCardOrListText = ({type, setOpen} :
+const AddCardOrListText = ({type, listId, setOpen} :
     { type: string,
-    setOpen: () => void}) => {
+      listId?: string,
+    setOpen: (value: boolean) => void}) => {
   const [title, setTitle] = useState('');
   const classes = useStyle();
+  const { addCard, addList } = useContext(Context);
+
+  const handleAddCardOnList = () => {
+    console.log('add card on list');
+    if (type === 'card') {
+       console.log('add card on list');
+       console.log(listId);
+       const id = listId? listId : '';
+       if (addCard) addCard(title, 'description', id);
+    } else {
+        console.log('add list');
+    }
+
+    setTitle('');
+    setOpen(false);
+  }
 
   return (
     <>
@@ -16,17 +33,16 @@ const AddCardOrListText = ({type, setOpen} :
         <InputBase 
             multiline
                 value={ title } onChange={e => setTitle(e.target.value)}
-                onBlur={() => setOpen()}
             placeholder={ type === 'card' ? 'Enter a title for this card...' : 'Enter list title...'} 
             inputProps={{className: classes.input}}
         />
     </Paper>
     <div className={classes.confirm}>
         <div className={classes.options}>
-            <Button className={classes.btnConfirm}>
+            <Button className={classes.btnConfirm} onClick={( ) => handleAddCardOnList()}>
                  {`Add ${type}`}
             </Button>
-            <IconButton onClick={() => setOpen()} >
+            <IconButton onClick={() => setOpen(false)} >
                 <ClearIcon/>
             </IconButton>
         </div>
