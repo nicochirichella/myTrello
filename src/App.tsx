@@ -64,61 +64,63 @@ function App() {
     const { destination, source, draggableId, type } = result;
     console.table([source, destination, draggableId, type]);
 
-    // if (!destination) {
-    //   return;
-    // }
+    if (!destination) {
+      return;
+    }
 
-    // if (
-    //   destination.droppableId === source.droppableId &&
-    //   destination.index === source.index
-    // ) {
-    //   return;
-    // }
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
 
-    // if (type === "list") {
-    //   const listsIds = data.listsIds;
-    //   listsIds.splice(source.index, 1);
-    //   listsIds.splice(destination.index, 0, draggableId);
-    //   setData({
-    //     ...data,
-    //     listsIds,
-    //   });
-    //   return;
-    // }
+    if (type === "list") {
+      const listsIds = data.listsIds;
+      listsIds.splice(source.index, 1);
+      listsIds.splice(destination.index, 0, draggableId);
+      setData({
+        ...data,
+        listsIds,
+      });
+      return;
+    }
 
-    // const startList = data.lists[source.droppableId];
-    // const finishList = data.lists[destination.droppableId];
+    const startList = data.lists[source.droppableId];
+    const finishList = data.lists[destination.droppableId];
 
-    // if (startList === finishList) {
-    //   const cards = startList.cards;
-    //   cards.splice(source.index, 1);
-    //   cards.splice(destination.index, 0, draggableId);
-    //   const newList = {
-    //     ...startList,
-    //     cards,
-    //   };
-    //   updateDataWithList(newList, newList.id);
-    //   return;
-    // }
+    if (startList === finishList) {
+      const cards = startList.cards;
+      const card = cards[source.index]
+      cards.splice(source.index, 1);
+      cards.splice(destination.index, 0, card);
+      const newList = {
+        ...startList,
+        cards,
+      };
+      updateDataWithList(newList, newList.id);
+      return;
+    }
 
-    // const startCards = startList.cards;
-    // startCards.splice(source.index, 1);
-    // const newStartList = {
-    //   ...startList,
-    //   cards: startCards,
-    // };
+    const startCards = startList.cards;
+    const card = startCards[source.index];
+    startCards.splice(source.index, 1);
+    const newStartList = {
+      ...startList,
+      cards: startCards,
+    };
 
-    //   const finishCards = finishList.cards;
-    //   finishCards.splice(destination.index, 0, draggableId);
-    //   const newFinishList = {
-    //     ...finishList,
-    //     cards: finishCards,
-    //   };
+    const finishCards = finishList.cards;
+    finishCards.splice(destination.index, 0, card);
+    const newFinishList = {
+      ...finishList,
+      cards: finishCards,
+    };
 
-    //   updateDataWithList(newStartList, newStartList.id);
-    //   updateDataWithList(newFinishList, newFinishList.id);
+    updateDataWithList(newStartList, newStartList.id);
+    updateDataWithList(newFinishList, newFinishList.id);
 
-    //   return;
+    return;
   };
 
   return (
